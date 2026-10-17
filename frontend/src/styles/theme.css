@@ -1,0 +1,24 @@
+:root {
+  /* Void & Champagne */
+  --void: #050507;
+  --obsidian: #0b0c10;
+  --gunmetal: #15171d;
+  --steel: #2a2d36;
+  --mist: #8b8d96;
+  --platinum: #ece8e1;
+
+  --champagne: #d6b77e;
+  --champagne-soft: #e8d3a8;
+  --champagne-deep: #9c7f4a;
+
+  --plasma: #7cc7ff;
+  --plasma-glow: rgba(124, 199, 255, 0.35);
+
+  --gold-gradient: linear-gradient(115deg, #9c7f4a 0%, #e8d3a8 35%, #d6b77e 55%, #fff4dc 70%, #9c7f4a 100%);
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --ease-luxe: cubic-bezier(0.76, 0, 0.24, 1);
+}

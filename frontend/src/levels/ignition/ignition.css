@@ -1,0 +1,209 @@
+.ignition {
+  position: fixed;
+  inset: 0;
+  background: var(--void);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ignition__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* ---------- HUD ---------- */
+.hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+}
+
+/* faint scanlines */
+.hud::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.018) 0px,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-color: var(--champagne-deep);
+  border-style: solid;
+  border-width: 0;
+}
+.corner--tl { top: 24px; left: 24px; border-top-width: 1px; border-left-width: 1px; }
+.corner--tr { top: 24px; right: 24px; border-top-width: 1px; border-right-width: 1px; }
+.corner--bl { bottom: 24px; left: 24px; border-bottom-width: 1px; border-left-width: 1px; }
+.corner--br { bottom: 24px; right: 24px; border-bottom-width: 1px; border-right-width: 1px; }
+
+.hud__top {
+  position: absolute;
+  top: 34px;
+  left: 70px;
+  right: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+.hud__top .mono:first-child {
+  color: var(--platinum);
+}
+.hud__accent {
+  color: var(--champagne);
+}
+
+.hud__boot {
+  position: absolute;
+  left: 70px;
+  bottom: 70px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  line-height: 2.1;
+  color: var(--mist);
+}
+.hud__boot p {
+  animation: bootLine 0.6s var(--ease-luxe) both;
+}
+.hud__boot p:last-child {
+  color: var(--plasma);
+}
+@keyframes bootLine {
+  from { opacity: 0; transform: translateX(-12px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+.hud__readout {
+  position: absolute;
+  right: 70px;
+  bottom: 70px;
+  text-align: right;
+}
+.hud__temp {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--champagne-soft);
+  margin: 6px 0 10px;
+}
+.hud__temp small {
+  font-size: 1.4rem;
+  color: var(--champagne-deep);
+  margin-left: 4px;
+}
+.hud__hex {
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  opacity: 0.6;
+}
+
+/* ---------- IGNITE BUTTON ---------- */
+.ignite {
+  position: absolute;
+  left: 50%;
+  bottom: 56px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+  touch-action: none;
+  transition: opacity 0.8s var(--ease-luxe);
+}
+.ignite.is-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.ignite__btn {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle, rgba(124, 199, 255, 0.08), transparent 70%);
+}
+.ignite__btn svg {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+.ignite__track {
+  fill: none;
+  stroke: rgba(214, 183, 126, 0.22);
+  stroke-width: 1;
+}
+.ignite__progress {
+  fill: none;
+  stroke: var(--plasma);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px var(--plasma));
+}
+.ignite__core {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--plasma);
+  box-shadow: 0 0 22px 4px var(--plasma-glow);
+  animation: corePulse 1.6s ease-in-out infinite;
+}
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+.ignite__label {
+  color: var(--platinum);
+}
+.ignite__status {
+  color: var(--plasma);
+  min-height: 1em;
+}
+.ignite__hint {
+  font-size: 0.58rem;
+  opacity: 0.5;
+}
+
+/* ---------- FLASH ---------- */
+.flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle at center, #f4fbff 0%, #a9dbff 40%, #1a2a3a 100%);
+}
+
+/* arrival into next level */
+.arrival-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  background: radial-gradient(circle at center, #f4fbff 0%, #a9dbff 40%, #1a2a3a 100%);
+  animation: arrive 1.6s var(--ease-luxe) forwards;
+}
+@keyframes arrive {
+  to { opacity: 0; }
+}
+
+/* ---------- MOBILE ---------- */
+@media (max-width: 760px) {
+  .hud__top { left: 24px; right: 24px; top: 40px; }
+  .hud__boot { left: 24px; bottom: auto; top: 80px; font-size: 0.6rem; }
+  .hud__readout { display: none; }
+  .ignite__hint { display: none; }
+}
