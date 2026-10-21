@@ -38,7 +38,7 @@ function Core() {
     const t = state.clock.elapsedTime
     const pulse = 1 + Math.sin(t * (1.2 + power * 2.5)) * 0.03 * (0.4 + power)
     mesh.current.scale.setScalar(pulse * (0.82 + power * 0.18 + surge * 0.25))
-    mat.current.emissiveIntensity = 0.25 + power * 1.6 + surge * 4
+    mat.current.emissiveIntensity = 0.25 + power * 0.8 + surge * 2.2
     mat.current.distort = 0.18 + power * 0.22 + surge * 0.3
     mat.current.emissive.copy(CHAMPAGNE).lerp(PLASMA, power * 0.45)
   })

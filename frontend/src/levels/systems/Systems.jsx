@@ -19,7 +19,7 @@ const LABELS = {
 
 const pad = (n) => String(n).padStart(2, '0')
 
-export default function Systems() {
+export default function Systems({ onComplete }) {
   const { groups, status } = useSkills()
   const [docked, setDocked] = useState([]) // indexes of docked cells
   const [active, setActive] = useState(null) // index shown in the side panel
@@ -57,7 +57,7 @@ export default function Systems() {
       setOnline(true)
       gsap.timeline()
         .to(systems, { surge: 1, duration: 0.5, ease: 'power3.in' })
-        .to(systems, { surge: 0.25, duration: 2.4, ease: 'power2.out' })
+        .to(systems, { surge: 0.08, duration: 2.4, ease: 'power2.out' })
     }, 1600)
     return () => clearTimeout(timer)
   }, [docked.length, groups.length])
@@ -131,7 +131,10 @@ export default function Systems() {
         <div className="systems__gate">
           <span className="systems__gate-lock">⬡</span>
           <p className="mono">Level 03 · Mission Archive</p>
-          <p className="systems__gate-title">Sealed — awaiting next build.</p>
+          <p className="systems__gate-title">Mission files recovered.</p>
+          <button type="button" className="mono systems__gate-btn" onClick={onComplete}>
+            Enter Mission Archive →
+          </button>
         </div>
       )}
     </section>
