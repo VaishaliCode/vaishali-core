@@ -74,26 +74,25 @@ public class DataSeeder implements CommandLineRunner {
     }
 
     private void seedSkills() {
-        Object[][] data = {
-                {"Java", "LANGUAGE", 90},
-                {"Spring Boot", "FRAMEWORK", 85}, {"Spring MVC", "FRAMEWORK", 80},
-                {"Hibernate", "FRAMEWORK", 78}, {"Spring Data JPA", "FRAMEWORK", 80},
-                {"PostgreSQL", "DATABASE", 82}, {"MySQL", "DATABASE", 80},
-                {"Maven", "TOOL", 75}, {"Git & GitHub", "TOOL", 80}, {"Docker", "TOOL", 60},
-                {"Linux", "TOOL", 72}, {"Postman", "TOOL", 85},
-                {"Data Structures & Algorithms", "CORE", 85}, {"DBMS", "CORE", 82},
-                {"Operating Systems", "CORE", 72}, {"Computer Networks", "CORE", 70},
-                {"Cloud Computing", "CORE", 65},
-                {"OOP", "CONCEPT", 88}, {"REST APIs & JWT", "CONCEPT", 85},
-                {"System Design (basic)", "CONCEPT", 62},
-                {"HTML / CSS / Bootstrap", "FRONTEND", 65},
+        String[][] data = {
+                {"Java", "LANGUAGE"},
+                {"Spring Boot", "FRAMEWORK"}, {"Spring MVC", "FRAMEWORK"},
+                {"Hibernate", "FRAMEWORK"}, {"Spring Data JPA", "FRAMEWORK"},
+                {"PostgreSQL", "DATABASE"}, {"MySQL", "DATABASE"},
+                {"Maven", "TOOL"}, {"Git & GitHub", "TOOL"}, {"Docker", "TOOL"},
+                {"Linux", "TOOL"}, {"Postman", "TOOL"},
+                {"Data Structures & Algorithms", "CORE"}, {"DBMS", "CORE"},
+                {"Operating Systems", "CORE"}, {"Computer Networks", "CORE"},
+                {"Cloud Computing", "CORE"},
+                {"OOP", "CONCEPT"}, {"REST APIs & JWT", "CONCEPT"},
+                {"System Design (basic)", "CONCEPT"},
+                {"HTML / CSS / Bootstrap", "FRONTEND"},
         };
         int order = 1;
-        for (Object[] row : data) {
+        for (String[] row : data) {
             Skill s = new Skill();
-            s.setName((String) row[0]);
-            s.setCategory((String) row[1]);
-            s.setProficiency((Integer) row[2]);
+            s.setName(row[0]);
+            s.setCategory(row[1]);
             s.setDisplayOrder(order++);
             skills.save(s);
         }
