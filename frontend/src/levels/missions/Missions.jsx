@@ -13,7 +13,7 @@ const isVibeLang = (p) => p.title.toLowerCase().includes('vibe')
 // Shows a link only when it is set and isn't just the GitHub profile placeholder
 const realRepo = (url) => url && !/github\.com\/[^/]+\/?$/.test(url)
 
-export default function Missions() {
+export default function Missions({ onComplete }) {
   const { projects, status } = useProjects()
   const [decrypted, setDecrypted] = useState([]) // indexes of opened files
   const [active, setActive] = useState(null) // file shown in the viewer
@@ -114,7 +114,10 @@ export default function Missions() {
           <div className="missions__gate">
             <span className="missions__gate-lock">⬡</span>
             <p className="mono">Level 04 · Honors Vault</p>
-            <p className="missions__gate-title">Sealed — awaiting next build.</p>
+            <p className="missions__gate-title">Honors vault detected.</p>
+            <button type="button" className="mono missions__gate-btn" onClick={onComplete}>
+              Enter Honors Vault →
+            </button>
           </div>
         )}
       </nav>
