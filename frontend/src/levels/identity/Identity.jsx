@@ -14,7 +14,7 @@ gsap.registerPlugin(useGSAP)
 const parseAccents = (str) =>
   str.split(' ').map((w) => ({ text: w.replace(/\*/g, ''), accent: w.startsWith('*') }))
 
-function Dossier() {
+function Dossier({ onComplete }) {
   const root = useRef(null)
   const words = parseAccents(profile.statement)
   const meLine = parseAccents(profile.meme.meLine)
@@ -142,13 +142,16 @@ function Dossier() {
       <div className="gate reveal">
         <span className="gate__lock">⬡</span>
         <p className="mono">Level 02 · Systems Bay</p>
-        <p className="gate__title">Sealed — awaiting next build.</p>
+        <p className="gate__title">Power cells detected.</p>
+        <button type="button" className="mono gate__btn" onClick={onComplete}>
+          Enter Systems Bay →
+        </button>
       </div>
     </div>
   )
 }
 
-export default function Identity() {
+export default function Identity({ onComplete }) {
   const [locked, setLocked] = useState(false)
 
   useEffect(() => {
@@ -199,7 +202,7 @@ export default function Identity() {
         {locked && <p className="mono identity__cue">Decoding dossier ↓</p>}
       </div>
 
-      {locked && <Dossier />}
+      {locked && <Dossier onComplete={onComplete} />}
     </section>
   )
 }

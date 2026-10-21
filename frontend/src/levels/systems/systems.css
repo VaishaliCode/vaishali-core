@@ -1,0 +1,184 @@
+/* ================= Level 02 — Systems Bay ================= */
+.systems {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  user-select: none;
+  background: var(--void);
+}
+.systems--empty {
+  display: grid;
+  place-items: center;
+}
+.systems__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* faint scanlines over the scene */
+.systems::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.016) 0 1px, transparent 1px 4px);
+}
+
+/* ---------- Top bar + status ---------- */
+.systems__top {
+  position: absolute;
+  top: 34px;
+  left: 70px;
+  right: 70px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 2;
+}
+.systems__top .mono:first-child { color: var(--platinum); }
+
+.systems__status {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  color: var(--plasma);
+  z-index: 2;
+  pointer-events: none;
+  animation: sysBlink 1.6s steps(2) infinite;
+}
+.systems.is-online .systems__status {
+  color: var(--champagne);
+  animation: none;
+}
+@keyframes sysBlink { 50% { opacity: 0.45; } }
+
+/* ---------- Labels under each 3D cell ---------- */
+.cell-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+}
+.cell-label .mono { font-size: 0.55rem; color: var(--champagne-deep); }
+.cell-label strong {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.15rem;
+  color: var(--platinum);
+  letter-spacing: 0.02em;
+}
+
+/* ---------- Progress (bottom left) ---------- */
+.systems__progress {
+  position: absolute;
+  left: 70px;
+  bottom: 70px;
+  z-index: 2;
+  pointer-events: none;
+}
+.systems__progress b { color: var(--champagne); font-weight: 400; }
+.systems__ticks { display: flex; gap: 6px; margin-top: 14px; }
+.systems__ticks i {
+  width: 26px;
+  height: 3px;
+  background: var(--steel);
+  transition: background 0.6s var(--ease-luxe), box-shadow 0.6s;
+}
+.systems__ticks i.is-on {
+  background: var(--plasma);
+  box-shadow: 0 0 10px var(--plasma-glow);
+}
+
+/* ---------- Skills panel (right) ---------- */
+.systems__panel {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: min(300px, 30vw);
+  padding: 26px 28px 30px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(21, 23, 29, 0.78), rgba(11, 12, 16, 0.78));
+  border: 1px solid var(--steel);
+  border-left: 1px solid var(--champagne-deep);
+  backdrop-filter: blur(10px);
+  animation: panelIn 0.8s var(--ease-luxe) both;
+}
+@keyframes panelIn {
+  from { opacity: 0; transform: translate(24px, -50%); }
+}
+.systems__panel > .mono:first-child { color: var(--plasma); font-size: 0.6rem; }
+.systems__panel-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2.4rem;
+  line-height: 1.05;
+  margin: 10px 0 20px;
+}
+.systems__panel ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.systems__panel li {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  font-size: 0.98rem;
+  color: var(--platinum);
+}
+.systems__panel li .mono { font-size: 0.55rem; color: var(--steel); }
+
+/* ---------- Gate (bottom centre) ---------- */
+.systems__gate {
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  transform: translateX(-50%);
+  z-index: 2;
+  text-align: center;
+  pointer-events: none;
+  animation: gateIn 1.4s var(--ease-luxe) both;
+}
+@keyframes gateIn {
+  from { opacity: 0; transform: translate(-50%, 20px); }
+}
+.systems__gate-lock {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--champagne);
+  margin-bottom: 10px;
+  animation: corePulse 2.4s ease-in-out infinite;
+}
+.systems__gate-title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  margin-top: 6px;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 860px) {
+  .systems__top { left: 24px; right: 24px; top: 40px; }
+  .systems__status { top: 10%; font-size: 0.55rem; letter-spacing: 0.12em; white-space: normal; width: 80%; text-align: center; }
+  .systems__progress { left: 24px; bottom: 40px; }
+  .systems__panel {
+    right: 16px;
+    left: 16px;
+    top: auto;
+    bottom: 100px;
+    width: auto;
+    transform: none;
+    padding: 18px 20px;
+    animation-name: panelInMobile;
+  }
+  .systems__panel-title { font-size: 1.8rem; margin: 6px 0 12px; }
+  .systems__panel ul { flex-direction: row; flex-wrap: wrap; gap: 8px 18px; }
+  .systems__gate { bottom: 30px; }
+  .cell-label strong { font-size: 0.95rem; }
+}
+@keyframes panelInMobile {
+  from { opacity: 0; transform: translateY(20px); }
+}

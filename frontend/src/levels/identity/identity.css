@@ -318,6 +318,20 @@
   margin-top: 10px;
 }
 
+/* gate button (opens the next level) */
+.gate__btn {
+  margin-top: 34px;
+  padding: 16px 30px;
+  color: var(--void);
+  background: var(--gold-gradient);
+  background-size: 200% auto;
+  transition: background-position 0.6s var(--ease-luxe), box-shadow 0.6s var(--ease-luxe);
+}
+.gate__btn:hover {
+  background-position: 100% center;
+  box-shadow: 0 10px 40px rgba(214, 183, 126, 0.3);
+}
+
 /* ---------- MOBILE ---------- */
 @media (max-width: 860px) {
   .identity__top { left: 24px; right: 24px; top: 40px; }
