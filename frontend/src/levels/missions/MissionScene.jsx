@@ -108,11 +108,12 @@ function Projector() {
 function CameraRig() {
   const { size } = useThree()
   const wide = size.width >= 1100
+  const aspect = size.width / size.height
   const base = useRef(new THREE.Vector3(0, 0, 12))
   useFrame((state) => {
     const shiftX = wide ? 1.2 : 0
-    const shiftY = wide ? 0 : -1.2
-    const z = (wide ? 10 : 12.5) - mission.surge * 0.8
+    const shiftY = wide ? 0 : -0.9 // narrow: crystal sits between the file strip and the viewer
+    const z = (wide ? 10 : THREE.MathUtils.clamp(8 / aspect, 12.5, 22)) - mission.surge * 0.8
     base.current.x += (state.pointer.x * 0.6 - base.current.x) * 0.04
     base.current.y += (state.pointer.y * 0.4 - base.current.y) * 0.04
     base.current.z += (z - base.current.z) * 0.04

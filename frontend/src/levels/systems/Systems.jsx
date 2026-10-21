@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import gsap from 'gsap'
 import useSkills from './useSkills'
 import SystemsScene from './SystemsScene'
@@ -24,6 +24,7 @@ export default function Systems({ onComplete }) {
   const [docked, setDocked] = useState([]) // indexes of docked cells
   const [active, setActive] = useState(null) // index shown in the side panel
   const [online, setOnline] = useState(false) // every cell docked
+  const labelEls = useRef([]) // HTML labels the 3D scene moves under each cell
 
   // One small animation object per cell. GSAP tweens `dock`, the scene reads it every frame.
   const cellStates = useMemo(() => groups.map(() => ({ dock: 0, hover: 0, hoverEase: 0 })), [groups])
@@ -66,7 +67,7 @@ export default function Systems({ onComplete }) {
     return (
       <section className="systems systems--empty">
         <p className="mono">
-          {status === 'loading' ? 'Scanning systems…' : 'Systems offline. Is the backend running?'}
+          {status === 'loading' ? 'Waking the core… first contact can take up to a minute.' : 'Systems offline. Is the backend running?'}
         </p>
       </section>
     )
@@ -77,7 +78,15 @@ export default function Systems({ onComplete }) {
   return (
     <section className={`systems ${online ? 'is-online' : ''}`}>
       <div className="systems__canvas">
-        <SystemsScene groups={groups} cellStates={cellStates} labels={LABELS} onDock={dock} />
+        <SystemsScene groups={groups} cellStates={cellStates} labelEls={labelEls} onDock={dock} />
+        <div className="cell-labels" aria-hidden="true">
+          {groups.map((g, i) => (
+            <div key={g.category} ref={(el) => (labelEls.current[i] = el)} className="cell-label">
+              <span className="mono">Cell {pad(i + 1)}</span>
+              <strong>{LABELS[g.category] ?? g.category}</strong>
+            </div>
+          ))}
+        </div>
       </div>
 
       <span className="corner corner--tl" />

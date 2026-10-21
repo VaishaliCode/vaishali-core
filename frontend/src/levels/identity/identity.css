@@ -336,6 +336,7 @@
 @media (max-width: 860px) {
   .identity__top { left: 24px; right: 24px; top: 40px; }
   .identity__role .mono { font-size: 0.6rem; letter-spacing: 0.12em; }
+  .identity__status { white-space: normal; width: calc(100% - 48px); text-align: center; font-size: 0.6rem; letter-spacing: 0.16em; line-height: 1.8; }
   .dossier { padding: 14vh 24px 8vh; }
   .dossier__grid { grid-template-columns: 1fr; gap: 64px; }
   .meme__row { grid-template-columns: 1fr; gap: 4px; }

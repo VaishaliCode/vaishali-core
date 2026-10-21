@@ -60,7 +60,7 @@ export default function Transmission({ onRestart }) {
   useEffect(() => {
     const el = logRef.current
     if (el) el.scrollTop = el.scrollHeight
-  }, [log])
+  }, [log, phase])
 
   // A short burst of light up the beam
   const pulse = () => {
@@ -202,20 +202,20 @@ export default function Transmission({ onRestart }) {
         {online && (
           <>
             <p className="mono terminal__label">Open channels</p>
-            <ul className="channels">
+            <ul className="tx-channels">
               {links.map((link, i) => {
                 const mail = isMail(link.url)
                 return (
-                  <li key={link.id ?? link.label} className="channel" style={{ animationDelay: `${i * 0.12}s` }}>
-                    <a className="channel__open" href={link.url} target={mail ? undefined : '_blank'} rel="noreferrer"
+                  <li key={link.id ?? link.label} className="tx-channel" style={{ animationDelay: `${i * 0.12}s` }}>
+                    <a className="tx-channel__open" href={link.url} target={mail ? undefined : '_blank'} rel="noreferrer"
                       onClick={() => transmitLink(link)}>
-                      <span className="mono channel__idx">{pad(i + 1)}</span>
-                      <span className="channel__label">{link.label}</span>
-                      <span className="mono channel__addr">{display(link.url)}</span>
-                      <span className="channel__arrow">↗</span>
+                      <span className="mono tx-channel__idx">{pad(i + 1)}</span>
+                      <span className="tx-channel__label">{link.label}</span>
+                      <span className="mono tx-channel__addr">{display(link.url)}</span>
+                      <span className="tx-channel__arrow">↗</span>
                     </a>
                     {mail && (
-                      <button type="button" className="mono channel__copy" onClick={copy}>
+                      <button type="button" className="mono tx-channel__copy" onClick={copy}>
                         {copied ? 'Copied ✓' : 'Copy'}
                       </button>
                     )}

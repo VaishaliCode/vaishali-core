@@ -56,7 +56,13 @@
 @keyframes sysBlink { 50% { opacity: 0.45; } }
 
 /* ---------- Labels under each 3D cell ---------- */
+.cell-labels { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
 .cell-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0; /* the scene fades it in once it knows where the cell is */
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;

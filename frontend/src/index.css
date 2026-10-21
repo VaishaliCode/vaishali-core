@@ -116,3 +116,15 @@ body::after {
   body, a, button { cursor: auto; }
   .cursor-dot, .cursor-ring { display: none; }
 }
+/* ---------- Phones: shared HUD fixes for every level ---------- */
+@media (max-width: 520px) {
+  /* top bar: brand left, level name right, never colliding */
+  .hud__top, .identity__top, .systems__top, .missions__top, .honors__top, .transmission__top { gap: 14px; }
+  .hud__top .mono, .identity__top .mono, .systems__top .mono, .missions__top .mono,
+  .honors__top .mono, .transmission__top .mono { font-size: 0.56rem; letter-spacing: 0.14em; }
+  .hud__top .mono:last-child, .identity__top .mono:last-child, .systems__top .mono:last-child,
+  .missions__top .mono:last-child, .honors__top .mono:last-child, .transmission__top .mono:last-child { text-align: right; }
+
+  /* "offline" / "loading" messages: keep them off the screen edges */
+  .systems--empty p, .missions--empty p, .honors--empty p { padding: 0 32px; text-align: center; line-height: 1.8; }
+}

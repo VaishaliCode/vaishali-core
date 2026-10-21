@@ -7,11 +7,14 @@ import CustomCursor from './components/CustomCursor'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
 import Admin from './admin/Admin'
+import { wakeServer } from './api/client'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
   useEffect(() => {
+    wakeServer()
+
     // Buttery smooth scrolling, synced with GSAP animations
     const lenis = new Lenis({ duration: 1.4, smoothWheel: true })
     window.lenis = lenis // later levels use this to lock/unlock scrolling

@@ -1,5 +1,6 @@
 package com.vaishali.core.common;
 
+import com.vaishali.core.auth.LoginThrottle;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.AuthenticationException;
@@ -35,5 +36,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthenticationException.class)
     public ProblemDetail unauthorized(AuthenticationException ex) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.UNAUTHORIZED, "Invalid username or password");
+    }
+
+    @ExceptionHandler(LoginThrottle.TooManyAttemptsException.class)
+    public ProblemDetail tooManyAttempts(LoginThrottle.TooManyAttemptsException ex) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage());
     }
 }

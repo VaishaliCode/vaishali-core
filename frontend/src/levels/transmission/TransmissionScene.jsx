@@ -252,7 +252,7 @@ function CameraRig() {
   useFrame((state) => {
     const aspect = size.width / size.height
     const wide = size.width > 1000
-    const z = (wide ? 11 : THREE.MathUtils.clamp(8 / aspect, 11, 20)) - transmission.surge * 0.6
+    const z = (wide ? 11 : THREE.MathUtils.clamp(10 / aspect, 12, 24)) - transmission.surge * 0.6
     const visH = 2 * z * Math.tan(THREE.MathUtils.degToRad(22.5))
     const shiftX = wide ? visH * aspect * 0.2 : 0
     const shiftY = wide ? 0 : -visH * 0.22

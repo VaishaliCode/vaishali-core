@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Html, MeshDistortMaterial, Sparkles, Stars, Environment, Lightformer } from '@react-three/drei'
+import { MeshDistortMaterial, Sparkles, Stars, Environment, Lightformer } from '@react-three/drei'
 import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing'
 import * as THREE from 'three'
 import { systems } from './systemsState'
@@ -24,7 +24,7 @@ function useLayout() {
   return useMemo(() => {
     const portrait = size.width / size.height < 0.8
     return portrait
-      ? { rx: 1.75, ry: 3.2, dock: 1.6, camZ: 16, shiftX: 0, shiftY: -0.9 }
+      ? { rx: 1.75, ry: 3.2, dock: 1.6, camZ: 17.5, shiftX: 0, shiftY: -1.25 } // phones: a bit further back and higher, clear of the skills panel
       : { rx: 4.2, ry: 2.55, dock: 2.0, camZ: 11, shiftX: 1.4, shiftY: 0 } // scene sits left of the skills panel
   }, [size.width, size.height])
 }
@@ -124,11 +124,11 @@ function Slot({ index, count, state, layout }) {
 }
 
 /* ---------- A power cell: flies from the outer orbit into its slot ---------- */
-function Cell({ index, count, state, label, code, layout, onDock }) {
+function Cell({ index, count, state, labelEls, layout, onDock }) {
   const outer = useRef()
   const spin = useRef()
   const glow = useRef()
-  const labelRef = useRef()
+  const labelPos = useMemo(() => new THREE.Vector3(), [])
   const a = angleFor(index, count)
 
   const from = useMemo(() => new THREE.Vector3(Math.cos(a) * layout.rx, Math.sin(a) * layout.ry, 0), [a, layout])
@@ -153,7 +153,16 @@ function Cell({ index, count, state, label, code, layout, onDock }) {
     glow.current.material.emissive.copy(CHAMPAGNE).lerp(PLASMA, d)
     glow.current.material.emissiveIntensity = 0.6 + h * 1.6 + d * 2.2 + systems.surge * 3
 
-    if (labelRef.current) labelRef.current.style.opacity = String(1 - smooth(0, 0.5, state.dock))
+    // HTML label under the cell: project its 3D position onto the screen
+    const el = labelEls.current[index]
+    if (el) {
+      outer.current.updateMatrixWorld()
+      outer.current.localToWorld(labelPos.set(0, -0.78, 0)).project(st.camera)
+      const x = (labelPos.x * 0.5 + 0.5) * st.size.width
+      const y = (0.5 - labelPos.y * 0.5) * st.size.height
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+      el.style.opacity = String(1 - smooth(0, 0.5, state.dock))
+    }
   })
 
   const hover = (on) => (e) => {
@@ -193,12 +202,6 @@ function Cell({ index, count, state, label, code, layout, onDock }) {
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 
-      <Html center position={[0, -0.78, 0]} zIndexRange={[5, 0]} style={{ pointerEvents: 'none' }}>
-        <div ref={labelRef} className="cell-label">
-          <span className="mono">{code}</span>
-          <strong>{label}</strong>
-        </div>
-      </Html>
     </group>
   )
 }
@@ -230,7 +233,7 @@ function Effects() {
   )
 }
 
-function Stage({ groups, cellStates, labels, onDock }) {
+function Stage({ groups, cellStates, labelEls, onDock }) {
   const layout = useLayout()
   return (
     <>
@@ -239,7 +242,7 @@ function Stage({ groups, cellStates, labels, onDock }) {
       <DockRing count={groups.length} cellStates={cellStates} layout={layout} />
       {groups.map((g, i) => (
         <Cell key={g.category} index={i} count={groups.length} state={cellStates[i]}
-          label={labels[g.category] ?? g.category} code={`Cell ${String(i + 1).padStart(2, '0')}`}
+          labelEls={labelEls}
           layout={layout} onDock={onDock} />
       ))}
       <CameraRig layout={layout} />
@@ -247,7 +250,7 @@ function Stage({ groups, cellStates, labels, onDock }) {
   )
 }
 
-export default function SystemsScene({ groups, cellStates, labels, onDock }) {
+export default function SystemsScene({ groups, cellStates, labelEls, onDock }) {
   return (
     <Canvas
       camera={{ position: [0, 0, 14], fov: 40 }}
@@ -266,7 +269,7 @@ export default function SystemsScene({ groups, cellStates, labels, onDock }) {
       <Stars radius={60} depth={40} count={2500} factor={3} saturation={0} fade speed={0.5} />
       <Sparkles count={60} scale={11} size={2} speed={0.35} color="#d6b77e" opacity={0.5} />
 
-      <Stage groups={groups} cellStates={cellStates} labels={labels} onDock={onDock} />
+      <Stage groups={groups} cellStates={cellStates} labelEls={labelEls} onDock={onDock} />
       <Effects />
     </Canvas>
   )

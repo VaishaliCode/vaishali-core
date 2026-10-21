@@ -296,7 +296,7 @@
   .dossier-file {
     left: 16px;
     right: 16px;
-    top: 240px;
+    top: 52%; /* leaves the crystal visible between the file strip and the viewer */
     bottom: 24px;
     width: auto;
     padding: 24px 22px;
