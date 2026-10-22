@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { signal } from './signalState'
+import { isTouch } from '../../components/pointerVerb'
 
 const clamp01 = (v) => Math.min(Math.max(v, 0), 1)
 
@@ -115,7 +116,13 @@ export default function FrequencyTuner({ locked, onLock }) {
         <div className="tuner__knob" style={{ left: `${value * 100}%` }} />
       </div>
 
-      <p className="mono tuner__hint">Drag to tune — find the clean signal</p>
+      {!locked && (
+        <p className="tuner__hint">
+          <span className="mono guide">
+            {isTouch ? 'Slide the dial' : 'Drag the dial'} until the signal reaches 100%
+          </span>
+        </p>
+      )}
     </div>
   )
 }

@@ -7,6 +7,43 @@ const order = { name: 'displayOrder', label: 'Display order', type: 'number', hi
 
 export const RESOURCES = [
   {
+    key: 'profile',
+    code: '01',
+    label: 'Profile',
+    singular: 'Profile',
+    endpoint: '/profile',
+    title: (p) => `${p.firstName} ${p.lastName}`,
+    subtitle: (p) => p.headline,
+    fields: [
+      { name: 'firstName', label: 'First name', type: 'text', required: true, max: 60 },
+      { name: 'lastName', label: 'Last name', type: 'text', required: true, max: 60 },
+      { name: 'headline', label: 'Headline', type: 'text', max: 200, hint: 'Shown under your name on the recruiter page' },
+      { name: 'location', label: 'Location', type: 'text', max: 120 },
+      { name: 'summary', label: 'Summary', type: 'textarea', rows: 5 },
+      { name: 'seeking', label: 'Open to', type: 'text', max: 200, hint: 'e.g. Backend Developer roles' },
+      { name: 'achievements', label: 'Achievements', type: 'list', hint: 'One per line', rows: 5 },
+      { name: 'languages', label: 'Languages spoken', type: 'list', hint: 'One per line' },
+      order,
+    ],
+  },
+  {
+    key: 'education',
+    code: 'ED',
+    label: 'Education',
+    singular: 'Education',
+    endpoint: '/education',
+    title: (e) => e.degree,
+    subtitle: (e) => [e.school, e.period].filter(Boolean).join(' — '),
+    fields: [
+      { name: 'degree', label: 'Degree', type: 'text', required: true, max: 150 },
+      { name: 'school', label: 'College / school', type: 'text', required: true, max: 150 },
+      { name: 'place', label: 'City', type: 'text', max: 150 },
+      { name: 'period', label: 'Years', type: 'text', max: 60, hint: 'e.g. 2021 – 2025' },
+      { name: 'score', label: 'Score', type: 'text', max: 60, hint: 'e.g. CGPA 8.4 / 10' },
+      order,
+    ],
+  },
+  {
     key: 'projects',
     code: '03',
     label: 'Missions',

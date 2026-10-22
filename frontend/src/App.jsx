@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CustomCursor from './components/CustomCursor'
 import Home from './pages/Home'
 import NotFound from './pages/NotFound'
+import Recruiter from './pages/recruiter/Recruiter'
 import Admin from './admin/Admin'
 import { wakeServer } from './api/client'
 
@@ -35,6 +36,7 @@ export default function App() {
       <CustomCursor />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/recruiter" element={<Recruiter />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

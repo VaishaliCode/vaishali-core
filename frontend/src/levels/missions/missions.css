@@ -40,7 +40,7 @@
   gap: 12px;
   z-index: 2;
 }
-.missions__status { color: var(--plasma); margin-bottom: 8px; animation: misBlink 1.6s steps(2) infinite; }
+.missions__status { color: var(--plasma); margin-bottom: 8px; font-size: 0.66rem; line-height: 1.7; animation: misBlink 1.6s steps(2) infinite; }
 .missions.is-online .missions__status { color: var(--champagne); animation: none; }
 @keyframes misBlink { 50% { opacity: 0.45; } }
 
@@ -91,7 +91,7 @@
   color: var(--platinum);
 }
 .file:not(.is-open) .file__title { color: var(--steel); letter-spacing: 0.04em; }
-.file__state { font-size: 0.55rem; }
+.file__state { font-size: 0.62rem; color: var(--champagne-soft); }
 .file.is-open .file__state { color: var(--plasma); }
 .file.is-busy .file__state { color: var(--champagne); }
 
@@ -198,9 +198,7 @@
   width: min(560px, 42vw);
   text-align: center;
   z-index: 2;
-  color: var(--champagne);
   pointer-events: none;
-  animation: misBlink 1.6s steps(2) infinite;
 }
 
 /* ---------- VibeLang terminal ---------- */

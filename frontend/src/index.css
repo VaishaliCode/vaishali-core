@@ -128,3 +128,114 @@ body::after {
   /* "offline" / "loading" messages: keep them off the screen edges */
   .systems--empty p, .missions--empty p, .honors--empty p { padding: 0 32px; text-align: center; line-height: 1.8; }
 }
+
+/* ---------- On-screen instructions ("guide" chips) ----------
+   Any instruction the visitor must act on ("Click each cell…", "Drag to tune…") uses
+   <span className="mono guide">…</span>: bright champagne text on a dark glass chip with a
+   glowing dot, so it stays readable on top of the 3D scenes. Two classes (.mono.guide) so it
+   beats each level's own .mono styles. */
+.mono.guide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: max-content;
+  max-width: calc(100vw - 48px);
+  padding: 9px 16px 9px 14px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  line-height: 1.55;
+  text-align: center;
+  white-space: normal;
+  color: var(--champagne-soft);
+  background: rgba(11, 12, 16, 0.82);
+  border: 1px solid rgba(214, 183, 126, 0.55);
+  border-radius: 3px;
+  text-shadow: 0 0 14px rgba(214, 183, 126, 0.35);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 1;
+  animation: guidePulse 2.4s ease-in-out infinite;
+}
+.mono.guide::before {
+  content: '';
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--plasma);
+  box-shadow: 0 0 10px 2px var(--plasma-glow);
+  animation: corePulse 1.6s ease-in-out infinite;
+}
+@keyframes guidePulse {
+  0%, 100% {
+    border-color: rgba(214, 183, 126, 0.45);
+    box-shadow: 0 0 0 0 rgba(214, 183, 126, 0), 0 8px 30px rgba(0, 0, 0, 0.45);
+  }
+  50% {
+    border-color: rgba(232, 211, 168, 0.95);
+    box-shadow: 0 0 24px 2px rgba(214, 183, 126, 0.26), 0 8px 30px rgba(0, 0, 0, 0.45);
+  }
+}
+@media (max-width: 520px) {
+  .mono.guide { font-size: 0.64rem; letter-spacing: 0.12em; padding: 8px 12px; gap: 8px; }
+}
+
+/* ---------- Level controls: Back · Restart · Next (components/LevelNav.jsx) ---------- */
+.lvnav {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 60;
+  display: flex;
+  gap: 8px;
+  animation: lvnavIn 0.9s var(--ease-luxe) 0.6s both;
+}
+@keyframes lvnavIn { from { opacity: 0; transform: translate(-50%, -10px); } }
+.lvnav__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  height: 36px;
+  padding: 0 16px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--champagne-soft);
+  background: rgba(11, 12, 16, 0.82);
+  border: 1px solid rgba(214, 183, 126, 0.55);
+  border-radius: 3px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.lvnav__btn b { font-weight: 400; font-size: 0.95rem; letter-spacing: 0; line-height: 1; }
+.lvnav__btn:hover,
+.lvnav__btn:focus-visible {
+  color: var(--void);
+  background: var(--champagne);
+  border-color: var(--champagne);
+  box-shadow: 0 0 22px rgba(214, 183, 126, 0.4);
+  outline: none;
+}
+.lvnav__btn--next { border-color: rgba(124, 199, 255, 0.6); color: var(--plasma); }
+
+/* tablets: icons only, still in the top bar */
+@media (max-width: 900px) {
+  .lvnav { top: 26px; gap: 6px; }
+  .lvnav__btn { width: 34px; height: 34px; padding: 0; }
+  .lvnav__btn span { display: none; }
+}
+/* phones: tucked above the top bar so nothing collides */
+@media (max-width: 520px) {
+  .lvnav { top: 4px; }
+  .lvnav__btn { width: 32px; height: 28px; }
+  .lvnav__btn b { font-size: 0.85rem; }
+}
+
+/* Instruction chips inside a panel never grow wider than the panel */
+.plaque .mono.guide,
+.terminal .mono.guide { max-width: 100%; }

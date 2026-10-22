@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import useCertificates from './useCertificates'
 import VaultScene, { setCursorHover } from './VaultScene'
 import { vault, resetVault } from './vaultState'
+import { tapLower, isTouch } from '../../components/pointerVerb'
 import DecodeText from '../../components/DecodeText'
 import './honors.css'
 
@@ -148,7 +149,7 @@ export default function Honors({ onComplete }) {
       {/* ---------- Top left: vault status, then the gate ---------- */}
       <div className="honors__status">
         <p className="mono honors__status-line">
-          {online ? '◆ Vault open · all honors verified' : `◇ ${pad(sealedLeft)} sealed capsule${sealedLeft === 1 ? '' : 's'}`}
+          {online ? '◆ Vault open · all honors verified' : `◇ ${pad(sealedLeft)} sealed capsule${sealedLeft === 1 ? '' : 's'}${sealedLeft < count ? ' left · rotate to the next one' : ''}`}
         </p>
 
         {online && (
@@ -180,7 +181,7 @@ export default function Honors({ onComplete }) {
             ))}
           </div>
           <p className="mono honors__count">Capsule {pad(focus + 1)} / {pad(count)}</p>
-          <p className="mono honors__keys">← → rotate · Enter unseal</p>
+          <p className="mono honors__keys">Keys: ← → rotate · Enter unseal</p>
         </div>
         <button type="button" className="honors__arrow" onClick={() => step(1)} disabled={busy} aria-label="Next capsule">→</button>
       </div>
@@ -247,7 +248,11 @@ export default function Honors({ onComplete }) {
               <span className="plaque__unseal-ring" />
               Unseal capsule
             </button>
-            <p className="mono plaque__hint">Or click the capsule in the vault</p>
+            <p className="plaque__hint">
+              <span className="mono guide">
+                {isTouch ? 'Tap Unseal capsule' : `Click Unseal capsule — or ${tapLower} the glowing capsule`}
+              </span>
+            </p>
           </div>
         )}
       </article>

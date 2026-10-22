@@ -47,7 +47,6 @@
   color: var(--plasma);
   z-index: 2;
   pointer-events: none;
-  animation: sysBlink 1.6s steps(2) infinite;
 }
 .systems.is-online .systems__status {
   color: var(--champagne);
@@ -182,7 +181,7 @@
 /* ---------- Mobile ---------- */
 @media (max-width: 860px) {
   .systems__top { left: 24px; right: 24px; top: 40px; }
-  .systems__status { top: 10%; font-size: 0.55rem; letter-spacing: 0.12em; white-space: normal; width: 80%; text-align: center; }
+  .systems__status { top: 10%; font-size: 0.55rem; letter-spacing: 0.12em; white-space: normal; width: calc(100vw - 32px); display: flex; justify-content: center; text-align: center; }
   .systems__progress { left: 24px; bottom: 40px; }
   .systems__panel {
     right: 16px;

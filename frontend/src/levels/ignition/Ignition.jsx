@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
+import { useNavigate } from 'react-router-dom'
 import ReactorScene from './ReactorScene'
 import { reactor, resetReactor } from './reactorState'
+import { isTouch } from '../../components/pointerVerb'
 import './ignition.css'
 
 const BOOT_LINES = [
@@ -32,6 +34,7 @@ export default function Ignition({ onComplete }) {
   const tempRef = useRef(null)
   const statusRef = useRef(null)
   const hexRef = useRef(null)
+  const navigate = useNavigate()
 
   const go = (p) => {
     phaseRef.current = p
@@ -180,10 +183,23 @@ export default function Ignition({ onComplete }) {
             </svg>
             <span className="ignite__core" />
           </button>
-          <p className="mono ignite__label">{phase === 'boot' ? 'Booting…' : 'Hold to ignite'}</p>
+          <p className={`mono ignite__label ${phase === 'ready' ? 'guide' : ''}`}>
+            {phase === 'boot' ? 'Booting…' : isTouch ? 'Press & hold the core to ignite' : 'Press & hold to ignite'}
+          </p>
           <p className="mono ignite__status" ref={statusRef} />
-          <p className="mono ignite__hint">or hold [ space ]</p>
+          <p className="mono ignite__hint">or hold the Space bar</p>
         </div>
+
+        {/* Shortcut for recruiters: the whole résumé on one page, no animation */}
+        {phase === 'ready' && (
+          <div className="recruiter-cta">
+            <button type="button" className="recruiter-cta__btn" onClick={() => navigate('/recruiter')}>
+              <span className="mono recruiter-cta__tag">Short on time?</span>
+              <span className="recruiter-cta__label">Recruiter view</span>
+              <span className="mono recruiter-cta__sub">Skip the animation · full résumé on one page →</span>
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="flash" ref={flashRef} />

@@ -113,7 +113,7 @@
 }
 .honors__pip.is-active.is-open { background: var(--champagne); }
 .honors__count { font-size: 0.6rem; color: var(--platinum); }
-.honors__keys { font-size: 0.52rem; color: var(--steel); letter-spacing: 0.2em; }
+.honors__keys { font-size: 0.64rem; color: var(--champagne-soft); letter-spacing: 0.18em; }
 
 /* ---------- Right: certificate plaque ---------- */
 .plaque {
@@ -200,7 +200,7 @@
   animation: plaqueSpin 2.4s linear infinite;
 }
 @keyframes plaqueSpin { to { transform: rotate(360deg); } }
-.plaque__hint { font-size: 0.55rem; color: var(--mist); }
+.plaque__hint { text-align: left; }
 
 .plaque__sequence { list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 0.62rem; }
 .plaque__sequence li { opacity: 0; color: var(--platinum); animation: plaqueSeq 0.4s var(--ease-luxe) forwards; }

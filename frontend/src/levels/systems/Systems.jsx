@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import useSkills from './useSkills'
 import SystemsScene from './SystemsScene'
 import { systems, resetSystems } from './systemsState'
+import { tapWord, tapLower } from '../../components/pointerVerb'
 import DecodeText from '../../components/DecodeText'
 import './systems.css'
 
@@ -102,7 +103,13 @@ export default function Systems({ onComplete }) {
       </header>
 
       <p className="mono systems__status">
-        {online ? '◆ All systems online' : '◇ Power cells offline — click each cell to dock it'}
+        {online ? '◆ All systems online' : (
+          <span className="mono guide">
+            {docked.length === 0
+              ? `${tapWord} each glowing power cell to dock it`
+              : `${pad(groups.length - docked.length)} left · ${tapLower} the next cell to dock it`}
+          </span>
+        )}
       </p>
 
       {/* Progress: one tick per cell */}

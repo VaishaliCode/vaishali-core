@@ -2,8 +2,12 @@ package com.vaishali.core.config;
 
 import com.vaishali.core.certificate.Certificate;
 import com.vaishali.core.certificate.CertificateRepository;
+import com.vaishali.core.education.Education;
+import com.vaishali.core.education.EducationRepository;
 import com.vaishali.core.link.SocialLink;
 import com.vaishali.core.link.SocialLinkRepository;
+import com.vaishali.core.profile.Profile;
+import com.vaishali.core.profile.ProfileRepository;
 import com.vaishali.core.project.Project;
 import com.vaishali.core.project.ProjectRepository;
 import com.vaishali.core.skill.Skill;
@@ -22,6 +26,8 @@ public class DataSeeder implements CommandLineRunner {
     private final CertificateRepository certificates;
     private final SkillRepository skills;
     private final SocialLinkRepository links;
+    private final ProfileRepository profiles;
+    private final EducationRepository education;
 
     @Override
     public void run(String... args) {
@@ -29,6 +35,8 @@ public class DataSeeder implements CommandLineRunner {
         if (certificates.count() == 0) seedCertificates();
         if (skills.count() == 0) seedSkills();
         if (links.count() == 0) seedLinks();
+        if (profiles.count() == 0) seedProfile();
+        if (education.count() == 0) seedEducation();
     }
 
     private void seedProjects() {
@@ -103,6 +111,34 @@ public class DataSeeder implements CommandLineRunner {
                 link(1, "GitHub", "https://github.com/VaishaliCode"),
                 link(2, "LinkedIn", "https://www.linkedin.com/in/vaishali-muley-614765248"),
                 link(3, "Email", "mailto:vaishali.muley30112003@gmail.com")));
+    }
+
+    private void seedProfile() {
+        Profile p = new Profile();
+        p.setDisplayOrder(1);
+        p.setFirstName("Vaishali");
+        p.setLastName("Muley");
+        p.setHeadline("Backend Developer · Java · Spring Boot · PostgreSQL");
+        p.setLocation("Chhatrapati Sambhajinagar, Maharashtra");
+        p.setSummary("Computer Science engineer who thinks in Java and dreams in data structures. "
+                + "I design REST APIs, lock them down with JWT, model data in PostgreSQL — and once got curious "
+                + "enough to build an entire programming language from scratch, lexer to runtime.");
+        p.setSeeking("Backend Developer / Software Engineer roles");
+        p.setAchievements(List.of(
+                "5★ rating in Java — HackerRank",
+                "5★ rating in SQL — HackerRank",
+                "Designed and built VibeLang, a programming language & interpreter written from scratch in Java"));
+        p.setLanguages(List.of("English", "Marathi", "Hindi"));
+        profiles.save(p);
+    }
+
+    private void seedEducation() {
+        Education e = new Education();
+        e.setDisplayOrder(1);
+        e.setDegree("B.E. Computer Science & Engineering");
+        e.setSchool("ICEEM College");
+        e.setPlace("Chhatrapati Sambhajinagar, Maharashtra");
+        education.save(e);
     }
 
     private Certificate cert(int order, String title, String issuer) {

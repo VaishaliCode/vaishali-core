@@ -4,6 +4,7 @@ import useProjects from './useProjects'
 import MissionScene from './MissionScene'
 import VibeTerminal from './VibeTerminal'
 import { mission, resetMission } from './missionState'
+import { tapWord, tapLower, isTouch } from '../../components/pointerVerb'
 import DecodeText from '../../components/DecodeText'
 import './missions.css'
 
@@ -94,7 +95,7 @@ export default function Missions({ onComplete }) {
       {/* ---------- Left: the list of mission files ---------- */}
       <nav className="missions__list" aria-label="Mission files">
         <p className="mono missions__status">
-          {online ? '◆ Archive unlocked' : `◇ ${pad(projects.length - decrypted.length)} encrypted file${projects.length - decrypted.length === 1 ? '' : 's'}`}
+          {online ? '◆ Archive unlocked' : `◇ ${pad(projects.length - decrypted.length)} encrypted file${projects.length - decrypted.length === 1 ? '' : 's'}${decrypted.length ? ' left · decrypt to continue' : ''}`}
         </p>
         {projects.map((p, i) => {
           const opened = decrypted.includes(i)
@@ -104,7 +105,7 @@ export default function Missions({ onComplete }) {
               <span className="mono file__code">Mission {pad(i + 1)}</span>
               <span className="file__title">{opened ? p.title : p.title.replace(/\S/g, '▒')}</span>
               <span className="mono file__state">
-                {decrypting === i ? 'Decrypting…' : opened ? 'Decrypted' : 'Encrypted · click to open'}
+                {decrypting === i ? 'Decrypting…' : opened ? 'Decrypted' : `Encrypted · ${tapLower} to decrypt`}
               </span>
             </button>
           )
@@ -184,7 +185,11 @@ export default function Missions({ onComplete }) {
       )}
 
       {!current && (
-        <p className="mono missions__hint">Select a mission file to decrypt it</p>
+        <p className="missions__hint">
+          <span className="mono guide">
+            {tapWord} a mission file {isTouch ? 'above' : 'on the left'} to decrypt it
+          </span>
+        </p>
       )}
     </section>
   )

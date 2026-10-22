@@ -169,7 +169,7 @@
   background: var(--void);
   animation: txBlink 1.2s steps(2) infinite;
 }
-.terminal__hint { font-size: 0.55rem; color: var(--mist); }
+.terminal__hint { text-align: left; }
 
 .terminal__label { margin: 24px 20px 12px; color: var(--champagne-deep); font-size: 0.6rem; }
 
@@ -249,7 +249,7 @@
 }
 .compose__send:hover:not(:disabled) { background-position: 100% center; box-shadow: 0 10px 40px rgba(214, 183, 126, 0.3); }
 .compose__send:disabled { opacity: 0.35; }
-.compose__note { font-size: 0.52rem; color: var(--mist); }
+.compose__note { font-size: 0.62rem; color: var(--champagne-soft); }
 
 /* ---------- Tablet / phone: dish on top, terminal below ---------- */
 @media (max-width: 1000px) {

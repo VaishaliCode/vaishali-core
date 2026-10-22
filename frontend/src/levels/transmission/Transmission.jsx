@@ -195,7 +195,9 @@ export default function Transmission({ onRestart }) {
               <span className="terminal__uplink-dot" />
               Establish uplink
             </button>
-            <p className="mono terminal__hint">Aligns the dish and opens the channels</p>
+            <p className="terminal__hint">
+              <span className="mono guide">Press Establish uplink to see my contact channels</span>
+            </p>
           </div>
         )}
 
